@@ -3,8 +3,9 @@ export default function html([first, ...strings], ...values) {
         (acc, curr) => acc.concat(curr, strings.shift()),
         [first]
     )
-    .filter(x => x && x !== true || x === 0)
-    .join('')
+        // eslint-disable-next-line no-mixed-operators
+        .filter(x => x && x !== true || x === 0)
+        .join('')
 }
 
 export function createStore(reducer) {
@@ -12,7 +13,7 @@ export function createStore(reducer) {
     const roots = new Map()
 
     function render() {
-        for( const [root, component] of roots) {
+        for (const [root, component] of roots) {
             const output = component()
             root.innerHTML = output
         }
@@ -25,7 +26,7 @@ export function createStore(reducer) {
         },
         connect(selector = state => state) {
             return component => (props, ...args) =>
-                    component(Object.assign({}, props, selector(state), ...args))
+                component(Object.assign({}, props, selector(state), ...args))
         },
         dispatch(action, ...args) {
             state = reducer(state, action, args)
